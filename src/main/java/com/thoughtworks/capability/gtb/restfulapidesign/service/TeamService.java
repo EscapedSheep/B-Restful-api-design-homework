@@ -52,4 +52,8 @@ public class TeamService {
         }
         return teamRepository.updateTeamName(id, team);
     }
+
+    public List<Team> getTeams() {
+        return teamRepository.getTeams();
+    }
 }

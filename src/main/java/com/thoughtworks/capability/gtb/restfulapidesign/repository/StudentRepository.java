@@ -46,6 +46,14 @@ public class StudentRepository {
         this.students = new ArrayList<>(students);
     }
 
+    public AtomicInteger getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(AtomicInteger idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
     public void deleteStudent(int id) {
         Iterator<Student> iterator = students.iterator();
         while (iterator.hasNext()) {

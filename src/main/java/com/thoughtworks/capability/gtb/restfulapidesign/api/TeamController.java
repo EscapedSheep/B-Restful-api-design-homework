@@ -28,4 +28,9 @@ public class TeamController {
     public Team updateTeamName(@PathVariable int id, @RequestBody Team team) {
         return teamService.updateTeamName(id, team);
     }
+
+    @GetMapping("/teams")
+    public List<Team> getTeams() {
+        return teamService.getTeams();
+    }
 }

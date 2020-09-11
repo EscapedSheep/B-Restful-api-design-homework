@@ -26,6 +26,14 @@ public class TeamRepository {
         return new ArrayList<>(teams);
     }
 
+    public AtomicInteger getIdGenerator() {
+        return idGenerator;
+    }
+
+    public void setIdGenerator(AtomicInteger idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
     public void setTeams(List<Team> teams) {
         this.teams = new ArrayList<>(teams);
     }

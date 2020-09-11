@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
@@ -38,6 +39,7 @@ class StudentControllerTest {
     @BeforeEach
     void setUp() {
         studentRepository.setStudents(new ArrayList<>());
+        studentRepository.setIdGenerator(new AtomicInteger(0));
         objectMapper = new ObjectMapper();
         student = Student.builder()
                 .gender(Student.Gender.MALE)
