@@ -41,4 +41,12 @@ public class StudentService {
         }
         return findResult.get();
     }
+
+    public Student updateStudent(int id, Student student) {
+        Optional<Student> findResult = studentRepository.findStudent(id);
+        if (!findResult.isPresent()) {
+            throw new StudentNotExistedException();
+        }
+        return studentRepository.updateStudent(id, student);
+    }
 }

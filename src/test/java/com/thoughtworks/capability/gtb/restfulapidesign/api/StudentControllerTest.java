@@ -101,4 +101,22 @@ class StudentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(student.getName())));
     }
+
+    @Test
+    void should_update_student_given_id_and_student_info() throws Exception {
+        student = studentRepository.addStudent(student);
+
+        student.setName("newName");
+        student.setNote("newNote");
+        String json = objectMapper.writeValueAsString(student);
+
+        mockMvc.perform(put("/v1/students/" + student.getId()).content(json).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(student.getName())))
+                .andExpect(jsonPath("$.note", is(student.getNote())));
+
+        Student updatedStudent = studentRepository.getStudents().stream().filter(s -> s.getId() == student.getId()).findFirst().get();
+        assertEquals(student.getName(), updatedStudent.getName());
+        assertEquals(student.getNote(), updatedStudent.getNote());
+    }
 }

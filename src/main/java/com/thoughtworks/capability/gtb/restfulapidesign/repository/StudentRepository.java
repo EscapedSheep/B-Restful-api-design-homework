@@ -1,5 +1,6 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.repository;
 
+import com.sun.tools.javac.jvm.Gen;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Student;
 import org.springframework.stereotype.Repository;
 
@@ -61,5 +62,19 @@ public class StudentRepository {
 
     public Optional<Student> findStudent(int id) {
         return students.stream().filter(student -> student.getId() == id).findFirst();
+    }
+
+    public Student updateStudent(int id, Student student) {
+        Iterator<Student> iterator = students.iterator();
+        Student updatedStudent = students.stream().filter(s -> s.getId() == id).findFirst().get();
+
+        Student.Gender newGender = student.getGender() == null ? updatedStudent.getGender() : student.getGender();
+        String newName = student.getName() == null ? updatedStudent.getName() : student.getName();
+        String newNote = student.getNote() == null ? updatedStudent.getNote() : student.getNote();
+        updatedStudent.setGender(newGender);
+        updatedStudent.setName(newName);
+        updatedStudent.setNote(newNote);
+
+        return updatedStudent;
     }
 }
