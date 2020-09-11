@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class StudentRepository {
@@ -51,5 +52,9 @@ public class StudentRepository {
                 iterator.remove();
             }
         }
+    }
+
+    public List<Student> findStudentByGender(Student.Gender gender) {
+        return students.stream().filter(student -> student.getGender().equals(gender)).collect(Collectors.toList());
     }
 }

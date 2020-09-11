@@ -20,6 +20,6 @@ public class Student {
 
 
     public static enum Gender {
-        MALE, FEMALE
+        MALE, FEMALE;
     }
 }

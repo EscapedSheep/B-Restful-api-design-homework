@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,5 +64,32 @@ class StudentControllerTest {
 
         mockMvc.perform(delete("/v1/students/" + student.getId()))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void should_return_intend_student_when_call_api_given_search_criteria() throws Exception {
+        student = studentRepository.addStudent(student);
+        Student newFemaleStudent = Student.builder()
+                .gender(Student.Gender.FEMALE)
+                .name("Simon")
+                .note("")
+                .build();
+        newFemaleStudent = studentRepository.addStudent(newFemaleStudent);
+
+        mockMvc.perform((get("/v1/students")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is(student.getName())))
+                .andExpect(jsonPath("$[1].name", is(newFemaleStudent.getName())));
+
+        mockMvc.perform((get("/v1/students").param("gender", "MALE")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is(student.getName())));
+
+        mockMvc.perform((get("/v1/students").param("gender", "FEMALE")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is(newFemaleStudent.getName())));
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @V1Controller
 public class StudentController {
     private StudentService studentService;
@@ -25,6 +27,11 @@ public class StudentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteStudent(@PathVariable int id) {
         studentService.deleteStudent(id);
+    }
+
+    @GetMapping("/students")
+    public List<Student> findStudents(@RequestParam(name = "gender", required = false)String gender) {
+        return studentService.findStudents(gender);
     }
 
 }
