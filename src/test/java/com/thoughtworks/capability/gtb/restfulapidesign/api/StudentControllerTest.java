@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,5 +56,13 @@ class StudentControllerTest {
         List<Student> students = studentRepository.getStudents();
         assertEquals(students.size(), 1);
         assertEquals(students.get(0).getName(), student.getName());
+    }
+
+    @Test
+    void should_delete_student_when_call_api_given_student_id() throws Exception {
+        student = studentRepository.addStudent(student);
+
+        mockMvc.perform(delete("/v1/students/" + student.getId()))
+                .andExpect(status().isNoContent());
     }
 }

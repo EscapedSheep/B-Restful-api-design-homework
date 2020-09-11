@@ -17,4 +17,8 @@ public class StudentService {
     public Student addStudent(Student student) {
         return studentRepository.addStudent(student);
     }
+
+    public void deleteStudent(int id) {
+        studentRepository.deleteStudent(id);
+    }
 }

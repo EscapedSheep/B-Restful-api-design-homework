@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,5 +41,15 @@ public class StudentRepository {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public void deleteStudent(int id) {
+        Iterator<Student> iterator = students.iterator();
+        while (iterator.hasNext()) {
+            Student currentStudent = iterator.next();
+            if (currentStudent.getId() == id) {
+                iterator.remove();
+            }
+        }
     }
 }
