@@ -48,7 +48,7 @@ class StudentControllerTest {
     @Test
     void should_add_student_when_call_api_given_student() throws Exception {
         String json = objectMapper.writeValueAsString(student);
-        mockMvc.perform(post("/students").contentType(MediaType.APPLICATION_JSON).content(json))
+        mockMvc.perform(post("/v1/students").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(student.getName())));
 

@@ -20,6 +20,12 @@ public class StudentRepository {
     private void init() {
         students = new ArrayList<>();
         idGenerator = new AtomicInteger(0);
+        Student student = Student.builder()
+                .gender(Student.Gender.MALE)
+                .name("tom")
+                .note("")
+                .build();
+        addStudent(student);
     }
 
     public Student addStudent(Student student) {
