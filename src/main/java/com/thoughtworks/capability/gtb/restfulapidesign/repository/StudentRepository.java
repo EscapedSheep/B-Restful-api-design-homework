@@ -39,11 +39,11 @@ public class StudentRepository {
     }
 
     public List<Student> getStudents() {
-        return students;
+        return new ArrayList<>(students);
     }
 
     public void setStudents(List<Student> students) {
-        this.students = students;
+        this.students = new ArrayList<>(students);
     }
 
     public void deleteStudent(int id) {
