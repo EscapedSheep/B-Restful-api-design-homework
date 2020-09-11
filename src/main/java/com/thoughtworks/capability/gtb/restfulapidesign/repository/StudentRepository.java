@@ -13,10 +13,26 @@ public class StudentRepository {
     private List<Student> students;
     private AtomicInteger idGenerator;
 
+    public StudentRepository() {
+    }
+
     @PostConstruct
     private void init() {
         students = new ArrayList<>();
         idGenerator = new AtomicInteger(0);
     }
 
+    public Student addStudent(Student student) {
+        student.setId(idGenerator.getAndIncrement());
+        students.add(student);
+        return student;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 }

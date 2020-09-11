@@ -1,9 +1,11 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class Student {
     private String note;
 
 
-    enum Gender {
+    public static enum Gender {
         MALE, FEMALE
     }
 }
