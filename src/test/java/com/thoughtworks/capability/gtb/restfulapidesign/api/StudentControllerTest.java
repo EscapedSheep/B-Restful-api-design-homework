@@ -92,4 +92,13 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is(newFemaleStudent.getName())));
     }
+
+    @Test
+    void should_return_student_when_call_api_given_student_id() throws Exception {
+        student = studentRepository.addStudent(student);
+
+        mockMvc.perform(get("/v1/students/" + student.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(student.getName())));
+    }
 }

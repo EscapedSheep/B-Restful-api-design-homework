@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -56,5 +57,9 @@ public class StudentRepository {
 
     public List<Student> findStudentByGender(Student.Gender gender) {
         return students.stream().filter(student -> student.getGender().equals(gender)).collect(Collectors.toList());
+    }
+
+    public Optional<Student> findStudent(int id) {
+        return students.stream().filter(student -> student.getId() == id).findFirst();
     }
 }
