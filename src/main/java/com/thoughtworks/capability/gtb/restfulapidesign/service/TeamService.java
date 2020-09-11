@@ -2,6 +2,7 @@ package com.thoughtworks.capability.gtb.restfulapidesign.service;
 
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Student;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Team;
+import com.thoughtworks.capability.gtb.restfulapidesign.exception.TeamNotExistedException;
 import com.thoughtworks.capability.gtb.restfulapidesign.repository.StudentRepository;
 import com.thoughtworks.capability.gtb.restfulapidesign.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,12 @@ public class TeamService {
         for (int i = 1; i <= TEAM_COUNTS; i++) {
             teamRepository.addTeam(Team.builder().name("Team " + i).build());
         }
+    }
+
+    public Team updateTeamName(int id, Team team) {
+        if (!teamRepository.findTeam(id).isPresent()) {
+            throw new TeamNotExistedException();
+        }
+        return teamRepository.updateTeamName(id, team);
     }
 }

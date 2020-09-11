@@ -1,6 +1,8 @@
 package com.thoughtworks.capability.gtb.restfulapidesign.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Student;
+import com.thoughtworks.capability.gtb.restfulapidesign.domain.Team;
 import com.thoughtworks.capability.gtb.restfulapidesign.repository.StudentRepository;
 import com.thoughtworks.capability.gtb.restfulapidesign.repository.TeamRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -58,5 +61,18 @@ class TeamControllerTest {
                 .andExpect(jsonPath("$[4].studentList", hasSize(1)))
                 .andExpect(jsonPath("$[5].name", is("Team 6")))
                 .andExpect(jsonPath("$[5].studentList", hasSize(1)));
+    }
+
+    @Test
+    void should_update_team_name_given_team_id_and_new_name() throws Exception{
+        Team team = Team.builder().name("newTeam").build();
+        team = teamRepository.addTeam(team);
+        String changedName = "changedName";
+        Team newTeam = Team.builder().name(changedName).build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(newTeam);
+        mockMvc.perform(put("/v1/teams/" + team.getId()).contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(changedName)));
     }
 }

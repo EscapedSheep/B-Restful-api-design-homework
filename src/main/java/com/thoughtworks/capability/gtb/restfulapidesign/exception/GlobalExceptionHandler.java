@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(StudentNotExistedException.class)
-    public ResponseEntity<ErrorResponse> handleStudentNotException(StudentNotExistedException exception) {
+    @ExceptionHandler({StudentNotExistedException.class, TeamNotExistedException.class})
+    public ResponseEntity<ErrorResponse> handleStudentNotException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }

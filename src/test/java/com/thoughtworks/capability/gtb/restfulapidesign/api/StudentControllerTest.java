@@ -106,9 +106,11 @@ class StudentControllerTest {
     void should_update_student_given_id_and_student_info() throws Exception {
         student = studentRepository.addStudent(student);
 
-        student.setName("newName");
-        student.setNote("newNote");
-        String json = objectMapper.writeValueAsString(student);
+        String newName = "newName";
+        String newNote = "newNote";
+        Student newStudent = Student.builder().name(newName).note(newNote).build();
+
+        String json = objectMapper.writeValueAsString(newStudent);
 
         mockMvc.perform(put("/v1/students/" + student.getId()).content(json).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -39,5 +40,15 @@ public class TeamRepository {
        Team findTeam = teams.stream().filter(team -> team.getId() == teamId).findFirst().get();
        findTeam.addStudent(student);
        return findTeam;
+    }
+
+    public Optional<Team> findTeam(int id) {
+        return teams.stream().filter(team -> team.getId() == id).findFirst();
+    }
+
+    public Team updateTeamName(int id, Team team) {
+        Team findTeam = findTeam(id).get();
+        findTeam.setName(team.getName());
+        return findTeam;
     }
 }
