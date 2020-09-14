@@ -55,13 +55,7 @@ public class StudentRepository {
     }
 
     public void deleteStudent(int id) {
-        Iterator<Student> iterator = students.iterator();
-        while (iterator.hasNext()) {
-            Student currentStudent = iterator.next();
-            if (currentStudent.getId() == id) {
-                iterator.remove();
-            }
-        }
+        students.removeIf(currentStudent -> currentStudent.getId() == id);
     }
 
     public List<Student> findStudentByGender(Student.Gender gender) {
